@@ -1,58 +1,94 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Short Link Generator</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen relative">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Short Link Generator
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+ </head>
+ <body class="bg-gray-100 flex items-center justify-center min-h-screen relative">
   <div class="absolute top-4 right-4">
-    <div class="relative">
-      <button class="menu-button">
-        <i class="fas fa-bars text-2xl"></i>
-      </button>
-      <div class="menu hidden" id="menu">
-        <a href="#">Home</a>
-        <div class="relative">
-          <a id="about-button">About</a>
-          <div class="submenu hidden" id="about-menu">
-            <a href="#">Our Team</a>
-            <a href="#">Our Story</a>
-          </div>
-        </div>
-        <div class="relative">
-          <a id="contact-button">Contact</a>
-          <div class="submenu hidden" id="contact-menu">
-            <a href="#">Email Us</a>
-            <a href="#">Call Us</a>
-          </div>
-        </div>
+   <div class="relative">
+    <button class="text-gray-700 focus:outline-none bg-white p-2 rounded-md shadow-md border border-gray-200" id="menu-button">
+     <i class="fas fa-bars text-2xl">
+     </i>
+    </button>
+    <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden" id="menu">
+     <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" href="#">
+      Home
+     </a>
+     <div class="relative">
+      <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" id="about-button">
+       About
+      </a>
+      <div class="hidden" id="about-menu">
+       <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" href="#">
+        Our Team
+       </a>
+       <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" href="#">
+        Our Story
+       </a>
       </div>
+     </div>
+     <div class="relative">
+      <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100 cursor-pointer" id="contact-button">
+       Contact
+      </a>
+      <div class="hidden" id="contact-menu">
+       <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" href="#">
+        Email Us
+       </a>
+       <a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" href="#">
+        Call Us
+       </a>
+      </div>
+     </div>
     </div>
+   </div>
   </div>
-  <main class="main-container">
-    <div class="header">
-      <img src="https://placehold.co/50x50" alt="Logo" class="logo">
-      <span class="app-title">Your App Name</span>
+  <main class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+   <div class="flex items-center mb-6 bg-gray-300 py-2 px-4 rounded-md shadow-md border border-gray-400">
+    <img alt="Logo of the Short Link Generator application, a stylized chain link icon" class="w-12 h-12 mr-4" src="https://placehold.co/50x50"/>
+    <span class="text-xl font-bold text-black">
+     Your App Name
+    </span>
+   </div>
+   <div class="flex flex-col items-center mb-6">
+    <div class="bg-gray-300 text-black py-2 px-4 rounded-md shadow-md border border-gray-400 w-full text-center">
+     <h1 class="text-2xl font-bold">
+      Short Link Generator
+     </h1>
     </div>
-    <div class="title">
-      <h1>Short Link Generator</h1>
+   </div>
+   <form class="space-y-4" id="shorten-form">
+    <div>
+     <label class="block text-sm font-medium text-gray-700" for="long-url">
+      Enter your long URL:
+     </label>
+     <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="long-url" placeholder="https://example.com/very-long-url" required="" type="text"/>
     </div>
-    <form id="shorten-form">
-      <label for="long-url">Enter your long URL:</label>
-      <input id="long-url" type="text" placeholder="https://example.com/very-long-url" required>
-      <button type="submit">Generate Short Link</button>
-    </form>
-    <div class="result hidden" id="result">
-      <p>Short URL:</p>
-      <p id="short-url"></p>
-    </div>
+    <button class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit">
+     Generate Short Link
+    </button>
+   </form>
+   <div class="hidden mt-6" id="result">
+    <p class="text-sm font-medium text-gray-700">
+     Short URL:
+    </p>
+    <p class="text-lg font-semibold text-indigo-600" id="short-url">
+    </p>
+   </div>
   </main>
-  <script src="app.js"></script>
-  <script src="scripts.js"></script>
-</body>
+    <script src="app.js">
+    <script src="script.js">
+ </body>
 </html>
