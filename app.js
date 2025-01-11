@@ -1,7 +1,9 @@
-// TinyURL API Key
-const API_KEY = "OxllujyRx8jayz8erW06YwndY7KrnKXJafstqWAFEL1zBmhvAHBkdf3aicZ7"; // Ganti dengan API key Anda
+// app.js
 
-// Form dan Elemen Hasil
+// TinyURL API Key
+const API_KEY = "VfUKuzir3aQHIm0684mhg5Y8u1TtCyjJZ47v4OwK8ZxkyQ1tMRzXUqOMiCm1"; // Ganti dengan API key Anda
+
+// Elemen DOM
 const form = document.getElementById("shorten-form");
 const longUrlInput = document.getElementById("long-url");
 const resultDiv = document.getElementById("result");
@@ -18,7 +20,6 @@ form.addEventListener("submit", async (event) => {
   }
 
   try {
-    // Panggilan API ke TinyURL
     const response = await fetch("https://api.tinyurl.com/create", {
       method: "POST",
       headers: {
@@ -32,7 +33,7 @@ form.addEventListener("submit", async (event) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to create short URL");
+      throw new Error(`API Error: ${response.status} ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -40,10 +41,10 @@ form.addEventListener("submit", async (event) => {
 
     // Tampilkan hasil short URL
     shortUrlDisplay.innerHTML = `<a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
-    resultDiv.style.display = "block";
+    resultDiv.classList.remove("hidden");
   } catch (error) {
-    console.error(error);
+    console.error("Error while creating short URL:", error);
     shortUrlDisplay.textContent = "Failed to create short URL. Please try again.";
-    resultDiv.style.display = "block";
+    resultDiv.classList.remove("hidden");
   }
 });
