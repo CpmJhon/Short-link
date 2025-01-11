@@ -1,5 +1,5 @@
 // Masukkan API Key Rebrandly
-const API_KEY = "5eb01998b8174006a43d0e24b6a4e172";
+const API_KEY = "7a2648edf866420689f6372a98bcdfd0";
 
 // Ambil elemen DOM
 const longUrlInput = document.getElementById("long-url");
