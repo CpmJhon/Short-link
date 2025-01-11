@@ -1,41 +1,49 @@
-// Replace this with your Rebrandly API Key
-const API_KEY = "7a2648edf866420689f6372a98bcdfd0";
+// TinyURL API Key
+const API_KEY = "OxllujyRx8jayz8erW06YwndY7KrnKXJafstqWAFEL1zBmhvAHBkdf3aicZ7"; // Ganti dengan API key Anda
 
-document.getElementById("shorten-form").addEventListener("submit", async (event) => {
-  event.preventDefault();
+// Form dan Elemen Hasil
+const form = document.getElementById("shorten-form");
+const longUrlInput = document.getElementById("long-url");
+const resultDiv = document.getElementById("result");
+const shortUrlDisplay = document.getElementById("short-url");
 
-  const longUrl = document.getElementById("long-url").value;
-  const resultDiv = document.getElementById("result");
-  const shortUrlLink = document.getElementById("short-url");
-  const errorMessage = document.getElementById("error-message");
+// Event Listener untuk Form
+form.addEventListener("submit", async (event) => {
+  event.preventDefault(); // Mencegah refresh halaman
 
-  // Clear previous results and errors
-  resultDiv.classList.add("hidden");
-  shortUrlLink.textContent = "";
-  errorMessage.classList.add("hidden");
-  errorMessage.textContent = "";
+  const longUrl = longUrlInput.value.trim(); // URL panjang dari input
+  if (!longUrl) {
+    alert("Please enter a valid URL.");
+    return;
+  }
 
   try {
-    const response = await fetch("https://api.rebrandly.com/v1/links", {
+    // Panggilan API ke TinyURL
+    const response = await fetch("https://api.tinyurl.com/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "apikey": API_KEY,
+        Authorization: `Bearer ${API_KEY}`,
       },
-      body: JSON.stringify({ destination: longUrl }),
+      body: JSON.stringify({
+        url: longUrl,
+        domain: "tiny.one", // Domain short URL (opsional)
+      }),
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Failed to shorten URL");
+      throw new Error("Failed to create short URL");
     }
 
     const data = await response.json();
-    shortUrlLink.textContent = data.shortUrl;
-    shortUrlLink.href = `https://${data.shortUrl}`;
-    resultDiv.classList.remove("hidden");
+    const shortUrl = data.data.tiny_url;
+
+    // Tampilkan hasil short URL
+    shortUrlDisplay.innerHTML = `<a href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+    resultDiv.style.display = "block";
   } catch (error) {
-    errorMessage.textContent = error.message;
-    errorMessage.classList.remove("hidden");
+    console.error(error);
+    shortUrlDisplay.textContent = "Failed to create short URL. Please try again.";
+    resultDiv.style.display = "block";
   }
 });
