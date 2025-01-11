@@ -1,7 +1,8 @@
+/* style.css */
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
-  color: #333;
   margin: 0;
   padding: 0;
   display: flex;
@@ -15,49 +16,60 @@ body {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
 }
 
 h1 {
-  margin-bottom: 16px;
-  color: #076eff;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 form {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-input[type="url"] {
+input {
+  width: 100%;
   padding: 10px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 10px;
-  font-size: 16px;
 }
 
 button {
-  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  background-color: #076eff;
-  color: white;
-  font-size: 16px;
-  border-radius: 4px;
+  padding: 10px 20px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 button:hover {
-  background-color: #055bcc;
+  background-color: #0056b3;
+}
+
+.hidden {
+  display: none;
 }
 
 #result {
   margin-top: 20px;
-  font-size: 16px;
+  background: #e8f4e8;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
-#short-url {
-  color: #076eff;
-  font-weight: bold;
+#short-url a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+#short-url a:hover {
+  text-decoration: underline;
 }
