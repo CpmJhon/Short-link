@@ -1,60 +1,41 @@
-// Masukkan API Key Rebrandly
+// Replace this with your Rebrandly API Key
 const API_KEY = "7a2648edf866420689f6372a98bcdfd0";
 
-// Ambil elemen DOM
-const longUrlInput = document.getElementById("long-url");
-const generateButton = document.getElementById("generate-button");
-const resultContainer = document.getElementById("result");
-const shortUrlLink = document.getElementById("short-url");
-const errorMessage = document.getElementById("error-message");
+document.getElementById("shorten-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-// Fungsi untuk mempersingkat URL
-async function shortenUrl(longUrl) {
-  const endpoint = "https://api.rebrandly.com/v1/links";
+  const longUrl = document.getElementById("long-url").value;
+  const resultDiv = document.getElementById("result");
+  const shortUrlLink = document.getElementById("short-url");
+  const errorMessage = document.getElementById("error-message");
 
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "apikey": API_KEY,
-    },
-    body: JSON.stringify({
-      destination: longUrl,
-      domain: { fullName: "rebrand.ly" },
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error(`Error: ${response.statusText}`);
-  }
-
-  return response.json();
-}
-
-// Event Listener pada tombol "Generate"
-generateButton.addEventListener("click", async () => {
-  const longUrl = longUrlInput.value.trim();
-
-  // Validasi input
-  if (!longUrl) {
-    errorMessage.textContent = "Please enter a valid URL.";
-    errorMessage.classList.remove("hidden");
-    resultContainer.classList.add("hidden");
-    return;
-  }
-
-  // Reset pesan error
+  // Clear previous results and errors
+  resultDiv.classList.add("hidden");
+  shortUrlLink.textContent = "";
   errorMessage.classList.add("hidden");
+  errorMessage.textContent = "";
 
   try {
-    // Panggil fungsi untuk mempersingkat URL
-    const result = await shortenUrl(longUrl);
-    shortUrlLink.textContent = result.shortUrl;
-    shortUrlLink.href = result.shortUrl;
-    resultContainer.classList.remove("hidden");
+    const response = await fetch("https://api.rebrandly.com/v1/links", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": API_KEY,
+      },
+      body: JSON.stringify({ destination: longUrl }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to shorten URL");
+    }
+
+    const data = await response.json();
+    shortUrlLink.textContent = data.shortUrl;
+    shortUrlLink.href = `https://${data.shortUrl}`;
+    resultDiv.classList.remove("hidden");
   } catch (error) {
-    errorMessage.textContent = `Failed to shorten URL: ${error.message}`;
+    errorMessage.textContent = error.message;
     errorMessage.classList.remove("hidden");
-    resultContainer.classList.add("hidden");
   }
 });
