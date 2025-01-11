@@ -4,17 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Short Link Generator</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
     <h1>Short Link Generator</h1>
     <form id="shorten-form">
-      <label for="long-url">Enter a long URL:</label>
-      <input type="url" id="long-url" name="long-url" placeholder="https://example.com/very-long-url" required>
-      <button type="submit">Shorten</button>
+      <label for="long-url">Enter your long URL:</label>
+      <input type="text" id="long-url" placeholder="https://example.com/very-long-url" required>
+      <button type="submit">Generate Short Link</button>
     </form>
-    <div id="result">
+    <div id="result" class="hidden">
+      <p>Short URL:</p>
       <p id="short-url"></p>
     </div>
   </main>
