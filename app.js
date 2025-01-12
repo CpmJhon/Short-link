@@ -28,7 +28,7 @@ form.addEventListener("submit", async (event) => {
       },
       body: JSON.stringify({
         url: longUrl,
-        domain: "cpm-jhon.my.id", // Domain short URL (opsional)
+        domain: "tinyurl.com", // Domain short URL (opsional)
       }),
     });
 
